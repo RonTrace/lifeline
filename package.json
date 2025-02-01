@@ -1,0 +1,72 @@
+{
+  "name": "lifeLine",
+  "displayName": "lifeLine",
+  "description": "A VS Code extension that provides the lifeLine() function for Cascade to call O1.",
+  "version": "0.0.1",
+  "publisher": "codeium",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RonTrace/lifeline"
+  },
+  "engines": {
+    "vscode": "^1.94.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lifeline.callLifeLine",
+        "title": "Call LifeLine API"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Lifeline Settings",
+      "properties": {
+        "o1.apiKey": {
+          "type": "string",
+          "description": "Your o1 (OpenAI) API Key",
+          "default": ""
+        },
+        "o1.model": {
+          "type": "string",
+          "description": "Default model for o1 completions",
+          "default": "gpt-3.5-turbo"
+        },
+        "o1.temperature": {
+          "type": "number",
+          "description": "Default temperature for o1 completions",
+          "default": 0.7
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "isomorphic-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.94.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "@types/isomorphic-fetch": "^0.0.39"
+  }
+}
