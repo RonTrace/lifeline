@@ -1,7 +1,7 @@
 {
   "name": "lifeLine",
   "displayName": "lifeLine",
-  "description": "A VS Code extension that provides the lifeLine() function for Cascade to call O1.",
+  "description": "A VS Code extension that provides the lifeLine() function for Cascade to call o1.",
   "version": "0.0.1",
   "publisher": "codeium",
   "repository": {
@@ -27,20 +27,15 @@
       "type": "object",
       "title": "Lifeline Settings",
       "properties": {
-        "o1.apiKey": {
+        "openai.apiKey": {
           "type": "string",
-          "description": "Your o1 (OpenAI) API Key",
+          "description": "Your OpenAI API Key",
           "default": ""
         },
-        "o1.model": {
+        "openai.model": {
           "type": "string",
-          "description": "Default model for o1 completions",
+          "description": "Default model for OpenAI completions",
           "default": "gpt-3.5-turbo"
-        },
-        "o1.temperature": {
-          "type": "number",
-          "description": "Default temperature for o1 completions",
-          "default": 0.7
         }
       }
     }

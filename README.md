@@ -63,3 +63,40 @@ MIT
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Development
+
+### Prerequisites
+- Node.js and npm installed
+- VS Code
+
+### Building and Installing Locally
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Compile the extension:
+   ```bash
+   npm run compile
+   ```
+4. Package the extension:
+   ```bash
+   npx vsce package
+   ```
+   This will create a `lifeLine-0.0.1.vsix` file in the root directory.
+
+5. Install the extension locally:
+   - Open VS Code
+   - Go to the Extensions view (Cmd+Shift+X)
+   - Click on the "..." menu at the top
+   - Select "Install from VSIX..."
+   - Choose the `lifeLine-0.0.1.vsix` file you just created
+
+### Development Workflow
+- Make your changes in the `src` directory
+- Run `npm run compile` to compile your changes
+- To test your changes:
+  - Press F5 in VS Code to launch a new Extension Development Host window
+  - Your extension will be loaded in this window for testing

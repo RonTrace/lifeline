@@ -4,31 +4,33 @@ import 'isomorphic-fetch';
 export interface LifeLineParams {
     prompt: string;
     systemPrompt?: string;
-    temperature?: number;
 }
 
 export async function lifeLineAPI(params: LifeLineParams): Promise<string> {
     const config = vscode.workspace.getConfiguration();
-    const apiKey = config.get<string>('o1.apiKey', '');
-    const model = config.get<string>('o1.model', 'gpt-3.5-turbo');
-    const defaultTemp = config.get<number>('o1.temperature', 0.7);
+    const apiKey = config.get<string>('openai.apiKey', '');
 
     if (!apiKey) {
-        throw new Error('O1 API key not configured. Please set o1.apiKey in your VS Code settings.');
+        throw new Error('OpenAI API key not configured. Please set openai.apiKey in your VS Code settings.');
     }
 
-    // Fallback to default if not specified
-    const temperature = params.temperature ?? defaultTemp;
-
-    // Build request body according to O1's spec
+    // Build the request body for the O1 model.
     const requestBody = {
-        model,
+        model: 'o1',
         messages: [
-            ...(params.systemPrompt ? [{ role: 'system', content: params.systemPrompt }] : []),
+            ...(params.systemPrompt
+                ? [{ role: 'system', content: params.systemPrompt }]
+                : []
+            ),
             { role: 'user', content: params.prompt }
-        ],
-        temperature
+        ]
     };
+
+    // Notify the user that the model call started.
+    const startTime = new Date();
+    vscode.window.showInformationMessage(
+        `Model ${requestBody.model} started at ${startTime.toLocaleTimeString()}`
+    );
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -42,23 +44,39 @@ export async function lifeLineAPI(params: LifeLineParams): Promise<string> {
 
         if (!response.ok) {
             const errorData = await response.text();
+            vscode.window.showErrorMessage(`API Error: ${response.status} - ${errorData}`);
             throw new Error(`API returned status ${response.status}: ${errorData}`);
         }
 
-        const data = await response.json() as {
-            choices?: Array<{
-                message?: {
-                    content?: string;
-                };
-            }>;
+        const data = (await response.json()) as {
+            choices?: [
+                {
+                    message: {
+                        content: string;
+                    };
+                }
+            ];
         };
-        
-        return data.choices?.[0]?.message?.content || 'No response';
+
+        // This is the full chain of thought (aka the entire assistant message).
+        const chainOfThought = data.choices?.[0]?.message?.content || '';
+
+        // Display the chain of thought in a notification.
+        // (Be aware that very long messages could overwhelm the notification.)
+        vscode.window.showInformationMessage(`Chain of thought: ${chainOfThought}`);
+
+        // After a short delay, display a finished message with the finish time.
+        setTimeout(() => {
+            const endTime = new Date();
+            vscode.window.showInformationMessage(
+                `Model ${requestBody.model} finished at ${endTime.toLocaleTimeString()}`
+            );
+        }, 5000);
+
+        return chainOfThought || 'No response';
     } catch (error) {
-        console.error('LifeLine API call failed:', error);
-        if (error instanceof Error) {
-            throw new Error(`LifeLine API call failed: ${error.message}`);
-        }
-        throw new Error('LifeLine API call failed with an unknown error');
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        vscode.window.showErrorMessage(`LifeLine API Error: ${errorMessage}`);
+        throw new Error(`LifeLine API call failed: ${errorMessage}`);
     }
 }

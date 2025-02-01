@@ -5,7 +5,9 @@ import { lifeLineAPI, LifeLineParams } from './lifeLineService';
 
 // This method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
-    console.log('Congratulations, your extension "lifeLine" is now active!');
+    vscode.debug.activeDebugConsole.appendLine('LifeLine extension is active and ready to use!');
+    vscode.debug.activeDebugConsole.appendLine('Use the Command Palette (Cmd+Shift+P) and search for "Call LifeLine API" to start.');
+    vscode.debug.activeDebugConsole.appendLine('-------------------');
 
     // Register the lifeLine function for direct use
     const disposable = vscode.commands.registerCommand('lifeline.callLifeLine', async () => {
@@ -58,7 +60,8 @@ export async function lifeLine(params: LifeLineParams): Promise<string> {
     try {
         return await lifeLineAPI(params);
     } catch (error) {
-        console.error('LifeLine function error:', error);
+        vscode.debug.activeDebugConsole.appendLine('LifeLine function error:');
+        vscode.debug.activeDebugConsole.appendLine(error instanceof Error ? error.message : 'Unknown error');
         if (error instanceof Error) {
             throw error;
         }
