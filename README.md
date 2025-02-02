@@ -1,6 +1,38 @@
 # LifeLine Extension for VS Code
 
-LifeLine is a VS Code extension that provides seamless integration with OpenAI's API. It offers both interactive AI assistance through file monitoring and programmatic access through a `lifeLine()` function, making it easy to integrate AI capabilities into your development workflow.
+LifeLine is a VS Code extension that provides seamless integration with OpenAI's o1. It gives you access to senior-level AI assistance for your coding tasks, acting like an expert developer at your fingertips. The extension automatically creates and manages a history of your interactions in markdown files, making it easy to track and reference your AI conversations.
+
+## Installation
+
+There are three steps to get started with LifeLine:
+
+1. **Install the Extension**
+   - Download the `.vsix` file from the latest release
+   - Open VS Code
+   - Go to the Extensions view (Ctrl+Shift+X)
+   - Click on the "..." menu at the top of the Extensions view
+   - Select "Install from VSIX..." and choose the downloaded file
+
+2. **Configure OpenAI API Key**
+   - Open VS Code settings (Cmd+, on macOS, Ctrl+, on Windows/Linux)
+   - Search for "openai.apiKey"
+   - Enter your OpenAI API key in the settings field
+
+3. **Add Global AI Rules**
+   Add the text from this file to your Windsurf global AI rules:
+   file: global-prompt-for-cascade.md
+
+## Usage
+
+The extension is designed to be simple to use:
+
+1. When you encounter a coding problem or need AI assistance, simply type "lifeline" in your AI code helper chat (like Cascade)
+2. The AI will automatically:
+   - Create a new markdown file in the `_lifeline` directory with the current timestamp
+   - Document your current problem and context
+   - Provide suggestions and solutions
+   - Track any code changes made
+3. All interactions are saved in the `_lifeline` directory for future reference
 
 ## Features
 
@@ -15,61 +47,6 @@ LifeLine is a VS Code extension that provides seamless integration with OpenAI's
 
 - VS Code version 1.96.0 or higher
 - An OpenAI API key
-
-## Installation
-
-1. Download the `.vsix` file from the latest release
-2. Open VS Code
-3. Go to the Extensions view (Ctrl+Shift+X)
-4. Click on the "..." menu at the top of the Extensions view
-5. Select "Install from VSIX..." and choose the downloaded file
-
-## Configuration
-
-Before using the extension, you need to configure your OpenAI API key:
-
-1. Open VS Code settings (Cmd+, on macOS, Ctrl+, on Windows/Linux)
-2. Search for "openai.apiKey"
-3. Enter your OpenAI API key
-
-## Usage
-
-### Method 1: File-Based Interaction
-1. Create or navigate to a `_lifeline` directory in your workspace
-2. Create a new markdown file with the format `_lifeline-[timestamp].md`
-3. Write your prompt/question in the file
-4. Save the file - the extension will automatically:
-   - Process your request
-   - Generate a response file (`_lifeline-response-[timestamp].md`)
-   - Copy the response to your clipboard
-   - Open the response in a new editor
-
-### Method 2: Command Palette
-1. Open the Command Palette (Cmd+Shift+P)
-2. Search for "Call LifeLine API"
-3. Enter your prompt when prompted
-4. Optionally provide a system prompt
-5. View the response in a new editor window
-
-### Method 3: Programmatic API
-The extension exposes a `lifeLine()` function that can be called programmatically:
-
-```typescript
-interface LifeLineParams {
-    prompt: string;
-    systemPrompt?: string;
-}
-
-async function lifeLine(params: LifeLineParams): Promise<string>
-```
-
-Example usage:
-```typescript
-const response = await lifeLine({
-    prompt: "How do I implement a binary search?",
-    systemPrompt: "You are an expert programming tutor."
-});
-```
 
 ## Development
 
@@ -111,3 +88,19 @@ MIT
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+```typescript
+interface LifeLineParams {
+    prompt: string;
+    systemPrompt?: string;
+}
+
+async function lifeLine(params: LifeLineParams): Promise<string>
+```
+
+Example usage:
+```typescript
+const response = await lifeLine({
+    prompt: "How do I implement a binary search?",
+    systemPrompt: "You are an expert programming tutor."
+});
