@@ -14,15 +14,28 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished",
+    "workspaceContains:**/_lifeline/*.md"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "lifeline.callLifeLine",
-        "title": "Call LifeLine API"
+        "title": "Call LifeLine API",
+        "category": "LifeLine",
+        "icon": "$(comment-discussion)"
       }
     ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "lifeline.callLifeLine",
+          "when": "true"
+        }
+      ]
+    },
     "configuration": {
       "type": "object",
       "title": "Lifeline Settings",
