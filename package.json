@@ -2,7 +2,7 @@
   "name": "lifeLine",
   "displayName": "lifeLine",
   "description": "A VS Code extension that provides the lifeLine() function for Cascade to call o1.",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "publisher": "codeium",
   "repository": {
     "type": "git",
@@ -26,6 +26,12 @@
         "title": "Call LifeLine API",
         "category": "LifeLine",
         "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "lifeLine.copyToClipboard",
+        "title": "Copy Latest Lifeline to Clipboard",
+        "category": "LifeLine",
+        "icon": "$(clippy)"
       }
     ],
     "menus": {
@@ -33,6 +39,10 @@
         {
           "command": "lifeline.callLifeLine",
           "when": "true"
+        },
+        {
+          "command": "lifeLine.copyToClipboard",
+          "when": "workspaceHasLifelineFiles"
         }
       ]
     },

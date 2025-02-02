@@ -1,13 +1,16 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { lifeLineAPI, LifeLineParams } from './lifeLineService';
+import { lifeLineAPI, LifeLineParams, copyToClipboard } from './lifeLineService';
+
+// Create output channel
+const outputChannel = vscode.window.createOutputChannel('LifeLine Debug');
 
 // This method is called when your extension is activated
 export function activate(context: vscode.ExtensionContext) {
-    vscode.debug.activeDebugConsole.appendLine('LifeLine extension is active and ready to use!');
-    vscode.debug.activeDebugConsole.appendLine('Use the Command Palette (Cmd+Shift+P) and search for "Call LifeLine API" to start.');
-    vscode.debug.activeDebugConsole.appendLine('-------------------');
+    outputChannel.appendLine('LifeLine extension is active and ready to use!');
+    outputChannel.appendLine('Use the Command Palette (Cmd+Shift+P) and search for "Call LifeLine API" to start.');
+    outputChannel.appendLine('-------------------');
 
     // Register the lifeLine function for direct use
     const disposable = vscode.commands.registerCommand('lifeline.callLifeLine', async (prompt?: string, systemPrompt?: string) => {
@@ -60,6 +63,48 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(disposable);
+
+    // Register command to test Cascade commands
+    const testCascadeCommand = vscode.commands.registerCommand('lifeline.testCascadeCommands', async () => {
+        try {
+            // Get all available commands
+            const allCommands = await vscode.commands.getCommands(true);
+
+            // Filter for cascade and windsurf related commands
+            const cascadeCommands = allCommands.filter(cmd => 
+                cmd.toLowerCase().includes('cascade') || 
+                cmd.toLowerCase().includes('windsurf')
+            );
+
+            // Clear the output channel and write the commands
+            outputChannel.clear();
+            outputChannel.appendLine('--- Cascade/Windsurf Commands ---');
+            cascadeCommands.forEach(cmd => {
+                outputChannel.appendLine(`- ${cmd}`);
+            });
+            outputChannel.appendLine('--- End of List ---');
+            outputChannel.show();
+
+            // Show information message
+            if (cascadeCommands.length > 0) {
+                vscode.window.showInformationMessage(`Found ${cascadeCommands.length} Cascade/Windsurf commands. Check 'LifeLine Debug' output channel.`);
+            } else {
+                vscode.window.showInformationMessage('No Cascade/Windsurf commands found.');
+            }
+
+            // Try calling a potential cascade.sendMessage command
+            try {
+                await vscode.commands.executeCommand('cascade.sendMessage', 'Testing from LifeLine');
+                outputChannel.appendLine('\nSuccessfully called cascade.sendMessage!');
+            } catch (err) {
+                outputChannel.appendLine(`\nFailed to call cascade.sendMessage: ${String(err)}`);
+            }
+        } catch (err) {
+            vscode.window.showErrorMessage(`Error testing Cascade commands: ${String(err)}`);
+        }
+    });
+
+    context.subscriptions.push(testCascadeCommand);
 
     // Create a FileSystemWatcher to monitor the _lifeline folder
     const workspaceFolders = vscode.workspace.workspaceFolders;
@@ -115,6 +160,9 @@ export function activate(context: vscode.ExtensionContext) {
                         // Create the response file with the API result
                         await vscode.workspace.fs.writeFile(responseUri, Buffer.from(result));
 
+                        // Copy the content to clipboard
+                        await copyToClipboard(responseUri.fsPath);
+
                         // Open the response file in the editor
                         const responseDocument = await vscode.workspace.openTextDocument(responseUri);
                         await vscode.window.showTextDocument(responseDocument);
@@ -163,8 +211,8 @@ export async function lifeLine(params: LifeLineParams): Promise<string> {
         return await lifeLineAPI(params);
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
-        vscode.debug.activeDebugConsole.appendLine('LifeLine function error:');
-        vscode.debug.activeDebugConsole.appendLine(errorMessage);
+        outputChannel.appendLine('LifeLine function error:');
+        outputChannel.appendLine(errorMessage);
         if (error instanceof Error) {
             throw error;
         }
