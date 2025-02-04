@@ -46,6 +46,7 @@ There are three steps to get started with LifeLine:
    > ## lifeline 
    >    When a user types **"lifeline"**, the following actions should occur:</summary>
    >
+   > <lifeline>
    > 1. **Access the lifeline markdown file:**  
    >    - Look for a folder in the project called `_lifeline`  
    >    - If that folder does not exist, create it
@@ -56,6 +57,11 @@ There are three steps to get started with LifeLine:
    >    - Summarize technical notes, design decisions, and other relevant project details.
    >    - Add a reference section with the path to specific files or code segments.
    >    - copy and paste the before and after of any code changes you've made in code blocks with comments.
+   >
+   > 3. **Very Important**
+   > - Only create the lifeline file. 
+   > - DO NOT make any other changes to the codebase
+   > </lifeline>
    > ```
    >
 
