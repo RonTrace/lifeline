@@ -2,6 +2,16 @@
 
 LifeLine is a VS Code extension that provides seamless integration with OpenAI's o1. It gives you access to senior-level AI assistance for your coding tasks, acting like an expert developer at your fingertips. The extension automatically creates and manages a history of your interactions in markdown files, making it easy to track and reference your AI conversations.
 
+## Usage
+
+The extension is designed to be simple to use:
+
+1. When you encounter a coding problem or need AI assistance, simply type "**lifeline**" in your AI code helper chat
+2. Your local AI will:
+   - Create a new _lifeline markdown file in the `_lifeline` directory that documents your current problem and context
+   3. The contents of the new file are sent to o1 and the response will be saved as well as copied to your clipboard
+3. Paste your clipboard into your AI code helper chat, or read the file and proceed however you wish.
+
 ## Installation
 
 There are three steps to get started with LifeLine:
@@ -18,35 +28,24 @@ There are three steps to get started with LifeLine:
    - Search for "openai.apiKey"
    - Enter your OpenAI API key in the settings field
 
+   Example in settings.json:
+   ```json
+   {
+     "openai.apiKey": "sk-your_api_key_here"
+   }
+   ```
+   > Note: Replace 'your_api_key_here' with your actual OpenAI API key. Keep this key secure and never share it publicly.
+
 3. **Add Global AI Rules**
    Add the text from this file to your Windsurf global AI rules:
    file: global-prompt-for-cascade.md
-
-## Usage
-
-The extension is designed to be simple to use:
-
-1. When you encounter a coding problem or need AI assistance, simply type "lifeline" in your AI code helper chat (like Cascade)
-2. The AI will automatically:
-   - Create a new markdown file in the `_lifeline` directory with the current timestamp
-   - Document your current problem and context
-   - Provide suggestions and solutions
-   - Track any code changes made
-3. All interactions are saved in the `_lifeline` directory for future reference
-
-## Features
-
-- **AI-Powered File Monitoring**: Automatically processes markdown files in the `_lifeline` directory
-- **Command Palette Integration**: Quick access to AI assistance through VS Code commands
-- **Programmatic API Access**: Direct access to OpenAI's API through the `lifeLine()` function
-- **Clipboard Integration**: Automatically copies AI responses to clipboard
-- **Secure API Key Management**: Manages OpenAI API keys through VS Code settings
-- **Workspace Support**: Works with multiple workspace folders
 
 ## Requirements
 
 - VS Code version 1.96.0 or higher
 - An OpenAI API key
+
+---   
 
 ## Development
 
@@ -84,23 +83,3 @@ The extension is designed to be simple to use:
 ## License
 
 MIT
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-```typescript
-interface LifeLineParams {
-    prompt: string;
-    systemPrompt?: string;
-}
-
-async function lifeLine(params: LifeLineParams): Promise<string>
-```
-
-Example usage:
-```typescript
-const response = await lifeLine({
-    prompt: "How do I implement a binary search?",
-    systemPrompt: "You are an expert programming tutor."
-});
