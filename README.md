@@ -30,21 +30,19 @@ There are three steps to get started with LifeLine:
    - Search for "openai.apiKey"
    - Enter your OpenAI API key in the settings field
 
-   > **Example in settings.json:**
    >
    > ```json
    > {
    >     "openai.apiKey": "sk-your_api_key_here"
    > }
    > ```
-   > ⚠️ Note: Replace 'your_api_key_here' with your actual OpenAI API key. Keep this key secure and never share it publicly.
-
+   >
 
 3. **Add Global AI Rules**
    - Add the text from the file (global-prompt-for-ai-coder.md) to your global AI rules:   
    
-   > **Add to your global AI rules**
-   >   
+   >
+   >  ```markdown 
    > ## lifeline 
    >    When a user types **"lifeline"**, the following actions should occur:</summary>
    >
@@ -58,6 +56,8 @@ There are three steps to get started with LifeLine:
    >    - Summarize technical notes, design decisions, and other relevant project details.
    >    - Add a reference section with the path to specific files or code segments.
    >    - copy and paste the before and after of any code changes you've made in code blocks with comments.
+   > ```
+   >
 
 ---
 
