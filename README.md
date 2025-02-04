@@ -30,44 +30,41 @@ There are three steps to get started with LifeLine:
    - Search for "openai.apiKey"
    - Enter your OpenAI API key in the settings field
 
-   <details>
-   <summary>Example in settings.json:</summary>
-
-   ```json
-   {
-     "openai.apiKey": "sk-your_api_key_here"
-   }
-   ```
+   > **Example in settings.json:**
+   >
+   > ```json
+   > {
+   >     "openai.apiKey": "sk-your_api_key_here"
+   > }
+   > ```
    > ⚠️ Note: Replace 'your_api_key_here' with your actual OpenAI API key. Keep this key secure and never share it publicly.
-   </details>
+
 
 3. **Add Global AI Rules**
-   - Add the text from the file (global-prompt-for-ai-coder.md) to your global AI rules:
-
+   - Add the text from the file (global-prompt-for-ai-coder.md) to your global AI rules:   
    
-<details>
-<summary>Add to your global AI rules</summary>
-## lifeline 
-When a user types **"lifeline"**, the following actions should occur:</summary>
+   > **Add to your global AI rules**
+   >   
+   > ## lifeline 
+   >    When a user types **"lifeline"**, the following actions should occur:</summary>
+   >
+   > 1. **Access the lifeline markdown file:**  
+   >    - Look for a folder in the project called `_lifeline`  
+   >    - If that folder does not exist, create it
+   >    - Inside that folder create  a file called `_lifeline-[date].md` where [date] is the current date and time in the format YYYY-MM-DD-HH-MM-SS
+   >
+   > 2. **Gather context to write inside the lifeline file:**
+   >    - Gather an outline of the current project and the specific task or problem at hand.
+   >    - Summarize technical notes, design decisions, and other relevant project details.
+   >    - Add a reference section with the path to specific files or code segments.
+   >    - copy and paste the before and after of any code changes you've made in code blocks with comments.
 
-1. **Access the lifeline markdown file:**  
-   - Look for a folder in the project called `_lifeline`  
-   - If that folder does not exist, create it
-   - Inside that folder create  a file called `_lifeline-[date].md` where [date] is the current date and time in the format YYYY-MM-DD-HH-MM-SS
-
-2. **Gather context to write inside the lifeline file:**
-   - Gather an outline of the current project and the specific task or problem at hand.
-   - Summarize technical notes, design decisions, and other relevant project details.
-   - Add a reference section with the path to specific files or code segments.
-   - copy and paste the before and after of any code changes you've made in code blocks with comments.
-</details>
+---
 
 ## Requirements
 
 - VS Code version 1.96.0 or higher
 - An OpenAI API key
-
----   
 
 ## Development
 
