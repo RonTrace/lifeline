@@ -1,13 +1,29 @@
-## lifeline 
-When a user types **"lifeline"**, you should should:
-  
-1. **Access the lifeline markdown file:**  
-   - Look for a folder in the project called `_lifeline`  
-   - If that folder does not exist, create it
-   - Inside that folder create  a file called `_lifeline-[date].md` where [date] is the current date and time in the format YYYY-MM-DD-HH-MM-SS
+<user-command>
+  When a user types **"lifeline"**, Cascade should:
+    <lifeline>
+    Follow the directions below in the <lifeline-prompt> section
+    </lifeline>
+</user-command>
+</user-commands-list>
 
-2. **Gather context to write inside the lifeline file:**
-   - Gather an outline of the current project and the specific task or problem at hand.
-   - Summarize technical notes, design decisions, and other relevant project details.
-   - Add a reference section with the path to specific files or code segments.
-   - copy and paste the before and after of any code changes you've made in code blocks with comments. 
+<lifeline-prompt>
+  <step>  
+  1. **Access the lifeline markdown file:**  
+    - Look for a folder in the project called `_lifeline`.  
+    - If that folder does not exist, create it.  
+    - Inside that folder, create a file called `_lifeline-[date].md`, where [date] is the current date and time in the format `YYYY-MM-DD-HH-MM-SS`.  
+  </step>
+  <step>
+  2. **Gather context to write inside the lifeline file:**  
+    - Summarize the current project and describe the specific task or problem at hand.  
+    - Document technical notes, design decisions, and other relevant project details.  
+    - Include a reference section with paths to specific files or code segments.  
+    - If applicable, **log the intended** before and after states of any planned code changes in code blocks (without applying changes to the actual codebase).  
+  </step>
+  <step>
+  3. **Important**  
+    - **Only create the lifeline file.**  
+    - **Do not make any modifications to the existing codebase.**  
+    - **Do not edit or modify files—just document information inside the lifeline file.**  
+  </step>
+</lifeline-prompt>
