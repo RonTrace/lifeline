@@ -2,6 +2,8 @@
 
 LifeLine is a VS Code extension that provides seamless integration with OpenAI's o1. It gives you access to senior-level AI assistance for your coding tasks, acting like an expert developer at your fingertips. The extension automatically creates and manages a history of your interactions in markdown files, making it easy to track and reference your AI conversations.
 
+**Note:** This extension requires your own OpenAI API key to function. The API key is used to access OpenAI's o1 model for providing expert coding assistance.
+
 ![Screenshot](lifeline.png)
 
 ## Usage
@@ -134,8 +136,12 @@ There are three steps to get started with LifeLine:
 
 ## Requirements
 
+You'll need one of the following:
 - VS Code version 1.96.0 or higher
-- An OpenAI API key
+- Windsurf by Codeium
+
+Essential requirement:
+- **Your own OpenAI API key** (This extension uses your personal API key to access OpenAI's services. You can obtain one from [OpenAI's website](https://platform.openai.com/api-keys))
 
 ## Development
 
