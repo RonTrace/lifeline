@@ -1,3 +1,5 @@
+<user-commands-list>
+When the user types these commands follow the rules outlined for that command.
 <user-command>
   When a user types **"lifeline"**, Cascade should:
     <lifeline>

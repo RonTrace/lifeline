@@ -43,13 +43,16 @@ There are three steps to get started with LifeLine:
    
    >
    >  ```markdown 
-   > ## lifeline 
+   ><user-commands-list>
+   >When the user types these commands follow the rules outlined for that command.
+   >
    > <user-command>
    >   When a user types **"lifeline"**, Cascade should:
    >     <lifeline>
    >     Follow the directions below in the <lifeline-prompt> section
    >     </lifeline>
    > </user-command>
+   > </user-commands-list>
    > 
    > <lifeline-prompt>
    >   <step>  
