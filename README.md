@@ -6,13 +6,33 @@ LifeLine is a VS Code extension that provides seamless integration with OpenAI's
 
 ## Usage
 
-The extension is designed to be simple to use:
+The extension provides two main commands:
 
-1. When you encounter a coding problem or need AI assistance, simply type "**lifeline**" in your AI code helper chat
+### 1. Basic Documentation - "lifeline"
+
+When you need to document your current coding task or problem:
+
+1. Type "**lifeline**" in your AI code helper chat
 2. Your local AI will:
-   - Create a new _lifeline markdown file in the `_lifeline` directory that documents your current problem and context
-   - The contents of the new file are sent to o1 and the response will be saved as well as copied to your clipboard
-3. Paste your clipboard into your AI code helper chat, or read the file and proceed however you wish.
+   - Create a new _lifeline markdown file in the `_lifeline` directory
+   - Document your current problem and context
+   - Include technical notes, design decisions, and references to specific files
+   - Log any intended code changes without modifying the actual codebase
+3. The contents are sent to o1 and the response will be saved and copied to your clipboard
+
+### 2. Project Specification - "lifeline spec"
+
+When you need to create a comprehensive project specification:
+
+1. Type "**lifeline spec**" in your AI code helper chat
+2. Your local AI will:
+   - Create a new _lifeline markdown file with detailed project specifications
+   - Include project summary, user stories, and requirements
+   - Document technical decisions and design considerations
+   - Provide references to relevant files and code segments
+   - Log any planned changes without modifying the codebase
+
+For both commands, you can paste your clipboard into your AI code helper chat or read the generated file directly.
 
 ## Installation
 
