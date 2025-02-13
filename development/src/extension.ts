@@ -138,10 +138,23 @@ export function activate(context: vscode.ExtensionContext) {
                         return;
                     }
 
-                    // Get the file name and create the response file name
+                    // Get the current timestamp
+                    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                    
+                    // Get the file name and create the response file name with timestamp
                     const fileName = uri.fsPath.split('/').pop() || '';
-                    const responseFileName = fileName.replace('.md', '').replace('_lifeline-', '_lifeline-response-') + '.md';
-                    const responseUri = vscode.Uri.file(uri.fsPath.replace(fileName, responseFileName));
+                    outputChannel.appendLine(`Original filename: ${fileName}`);
+                    
+                    const responseFileName = `_lifeline-response-${timestamp}.md`;
+                    outputChannel.appendLine(`Generated response filename: ${responseFileName}`);
+                    
+                    const originalPath = uri.fsPath;
+                    outputChannel.appendLine(`Original full path: ${originalPath}`);
+                    
+                    // Create response URI in the same directory but with new filename
+                    const directory = uri.fsPath.slice(0, -fileName.length);
+                    let responseUri = vscode.Uri.file(directory + responseFileName);
+                    outputChannel.appendLine(`Response full path: ${responseUri.fsPath}`);
 
                     // Show status message
                     const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
@@ -149,6 +162,19 @@ export function activate(context: vscode.ExtensionContext) {
                     statusBar.show();
 
                     try {
+                        // Check if response file already exists
+                        try {
+                            await vscode.workspace.fs.stat(responseUri);
+                            outputChannel.appendLine(`Warning: Response file already exists at ${responseUri.fsPath}`);
+                            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                            const uniqueResponseFileName = `_lifeline-response-${timestamp}-${Math.random().toString(36).substr(2, 5)}.md`;
+                            responseUri = vscode.Uri.file(directory + uniqueResponseFileName);
+                            outputChannel.appendLine(`Generated new unique response path: ${responseUri.fsPath}`);
+                        } catch (e) {
+                            // File doesn't exist, which is what we want
+                            outputChannel.appendLine(`Confirmed response file does not exist at ${responseUri.fsPath}`);
+                        }
+
                         // Call the LifeLine API with the file content and predefined system prompt
                         const systemPrompt = `You are a world-class software engineer, an expert in writing clean, maintainable, scalable, and efficient code. You approach software development with a deep understanding of both high-level architecture and low-level implementation details, ensuring robust, performant solutions. Your goal is to provide precise, step-by-step guidance to a junior developer, refining their work while minimizing unnecessary changes. Review the project and problem specifications, then create a structured markdown file with clear, actionable instructions for improving and implementing the solution. Where relevant, reference industry best practices from Clean Code (Robert C. Martin), Design Patterns (Gang of Four), The Pragmatic Programmer, or similar authoritative sources to reinforce the importance of clarity, maintainability, and scalability in software design. Your instructions should be both practical and educational, helping the junior developer improve their skills while executing your solution. The project and problem specifications are provided in the file. Include a project summary as well as the user stories, use cases, and requirements. Your response should be in a markdown format.`;
                         
@@ -157,6 +183,7 @@ export function activate(context: vscode.ExtensionContext) {
                             systemPrompt: systemPrompt
                         });
 
+                        outputChannel.appendLine(`Writing response to: ${responseUri.fsPath}`);
                         // Create the response file with the API result
                         await vscode.workspace.fs.writeFile(responseUri, Buffer.from(result));
 
