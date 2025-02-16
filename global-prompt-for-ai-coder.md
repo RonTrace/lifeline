@@ -13,6 +13,14 @@ When the user types these commands follow the rules outlined for that command.
     Follow the directions below in the <lifeline-spec-prompt> section
     </lifeline>
 </user-command>
+
+<user-command>
+  When a user types **"lifeline read"**, Cascade should:
+    <lifeline-read>
+    Find the most recent file in the _lifeline folder that starts with "_lifeline-response"and follow the directions outlined in that file step by step
+    </lifeline-read>
+</user-command>
+
 </user-commands-list>
 
 <lifeline-prompt>

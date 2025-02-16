@@ -37,7 +37,17 @@ When you need to create a comprehensive project specification:
    - Provide references to relevant files and code segments
    - Log any planned changes without modifying the codebase
 
-For both commands, you can paste your clipboard into your AI code helper chat or read the generated file directly.
+### 3. Execute Expert Response - "lifeline read"
+
+When you want to execute the expert's recommendations:
+
+1. Type "**lifeline read**" in your AI code helper chat
+2. Your local AI will:
+   - Find the most recent _lifeline-response file in the _lifeline folder
+   - Follow the directions outlined in that file step by step
+   - Execute any recommended changes or improvements
+
+For all commands, you can paste your clipboard into your AI code helper chat or read the generated file directly.
 
 ## Installation
 
